@@ -12,6 +12,7 @@ void DWT_Delay(uint32_t _us);
 
 void TIM2_Init(void);
 void TIM2_ms(uint32_t Time_ms);
+uint32_t TIM2_Get(void);
 
 
 #endif

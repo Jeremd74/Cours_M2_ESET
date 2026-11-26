@@ -9,6 +9,9 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include ThirdParty/FreeRTOS/portable/MemMang/subdir.mk
+-include ThirdParty/FreeRTOS/portable/GCC/ARM_CM4F/subdir.mk
+-include ThirdParty/FreeRTOS/subdir.mk
 -include Startup/subdir.mk
 -include Src/subdir.mk
 -include objects.mk

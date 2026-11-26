@@ -63,21 +63,36 @@ void DWT_Delay(uint32_t _us)
 ////////////// Timer 2  //////////////////////
 //////////////////////////////////////////////
 
-void TIM2_Init(void) {
-  RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;   /* horloge de TIM2 */
-  TIM2->CR1  = 0;                       /* timer arrêté */
-  TIM2->PSC  = 84U*1000U - 1U;          /* 84 MHz / 84 = 1 MHz */
-  TIM2->ARR  = 0xFFFFFFFFU;             /* compteur libre 32 bits */
-  TIM2->EGR  = TIM_EGR_UG;              /* charge le prescaler immédiatement */
-  TIM2->CNT  = 0;
-  TIM2->CR1 |= TIM_CR1_CEN;             /* démarrage */
+volatile uint32_t g_ms_ticks = 0;
+
+void TIM2_Init(void){
+    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+
+    TIM2->CR1  = 0;       /* Arrête TIM2 pendant la configuration */
+    TIM2->DIER = 0;
+    TIM2->PSC  = 1599U;//84U * 1000U - 1U;   /* 84 MHz / (8399 + 1) = 10 kHz */
+    TIM2->ARR  = 9U;      /* 10 kHz / (9 + 1) = 1 kHz, donc 1 ms */
+    TIM2->CNT  = 0;
+
+    TIM2->EGR = TIM_EGR_UG; /* Applique PSC et ARR */
+    TIM2->SR  = 0;          /* Efface les indicateurs en attente */
+
+    NVIC_SetPriority(TIM2_IRQn, 2);
+    NVIC_EnableIRQ(TIM2_IRQn);
+
+    TIM2->DIER |= TIM_DIER_UIE; /* Interruption à chaque mise à jour */
+    TIM2->CR1  |= TIM_CR1_CEN;  /* Démarre TIM2 */
 }
 
 void TIM2_ms(uint32_t Time_ms){
-  uint32_t start = TIM2->CNT;
-  while ((TIM2->CNT - start) < Time_ms);
+    uint32_t start = g_ms_ticks;
+
+    while ((uint32_t)(g_ms_ticks - start) < Time_ms);
 }
 
+uint32_t TIM2_Get(void){
+	return g_ms_ticks;
+}
 // Get MCO HSE to PA8 (D7)
 // the MCO1PRE[2:0] and MCO1[1:0]
 

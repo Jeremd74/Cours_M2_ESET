@@ -5,9 +5,18 @@
 
 extern uint32_t ticks;
 
+extern volatile uint32_t g_ms_ticks;
+
 // Interrupt Handler for SysTick Interrupt
-void SysTick_Handler(void){
+/*void SysTick_Handler(void){
 	ticks++;
+}*/
+
+void TIM2_IRQHandler(void){
+    if (TIM2->SR & TIM_SR_UIF) {
+        TIM2->SR &= ~TIM_SR_UIF; /* Efface le flag d'interruption */
+        g_ms_ticks++;
+    }
 }
 
 ////////////////    HOW TO SETUP INTERUPT ?   ///////////
