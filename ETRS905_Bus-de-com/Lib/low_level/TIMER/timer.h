@@ -8,9 +8,7 @@
 /*------------------Configuration------------------*/
 /* Fréquence d'horloge de TIM2 en MHz (APB1 Timer clock).
  * Nucleo-F446RE configurée par CubeMX : SYSCLK 84 MHz, APB1 /2 -> TIM2 = 84 MHz */
-#ifndef TIMER_CLK_MHZ
 #define TIMER_CLK_MHZ 84U
-#endif
 
 /*------------------Définition des fonctions------------------*/
 /**
