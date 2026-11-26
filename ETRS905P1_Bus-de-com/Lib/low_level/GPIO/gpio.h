@@ -1,36 +1,29 @@
+#ifndef __gpio_h__
 #define __gpio_h__
-#ifdef __gpio_h__
 
 /*------------------Include des librairies------------------*/
+#include "stm32f4xx.h"   /* Définit GPIO_TypeDef, GPIOA, ... */
 #include <stdint.h>
 
-/*------------------Définition des structures------------------*/
-
-
 /*------------------Définition des fonctions------------------*/
-/**
- * @brief 
- * 
- * @param GPIO 
- * @param pin 
- * @return uint16_t 
- */
-uint16_t GPIO_ReadPin(GPIO_typeDef* GPIO, uint16_t pin);
+/* Remarque : "pin" est le NUMÉRO de la broche (0..15), pas le masque GPIO_PIN_x */
 
 /**
- * @brief 
- * 
- * @param GPIO 
- * @param pin 
+ * @brief Lit l'état d'une broche
+ * @param GPIO port (GPIOA, GPIOB, ...)
+ * @param pin  numéro de broche (0..15)
+ * @return 1 si niveau haut, 0 sinon
  */
-void GPIO_ResetPin(GPIO_typeDef* GPIO, uint16_t pin);
+uint16_t GPIO_ReadPin(GPIO_TypeDef* GPIO, uint16_t pin);
 
 /**
- * @brief 
- * 
- * @param GPIO 
- * @param pin 
+ * @brief Met la broche au niveau bas
  */
-void GPIO_SetPin(GPIO_typeDef* GPIO, uint16_t pin);
+void GPIO_ResetPin(GPIO_TypeDef* GPIO, uint16_t pin);
+
+/**
+ * @brief Met la broche au niveau haut (relâchée si open-drain)
+ */
+void GPIO_SetPin(GPIO_TypeDef* GPIO, uint16_t pin);
 
 #endif

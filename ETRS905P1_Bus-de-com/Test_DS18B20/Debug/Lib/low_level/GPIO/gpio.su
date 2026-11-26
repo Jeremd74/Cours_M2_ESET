@@ -1,0 +1,3 @@
+C:/Users/Jerem/Documents/GitHub/Cours_M2_ESET/ETRS905P1_Bus-de-com/Lib/low_level/GPIO/gpio.c:5:10:GPIO_ReadPin	16	static
+C:/Users/Jerem/Documents/GitHub/Cours_M2_ESET/ETRS905P1_Bus-de-com/Lib/low_level/GPIO/gpio.c:10:6:GPIO_ResetPin	16	static
+C:/Users/Jerem/Documents/GitHub/Cours_M2_ESET/ETRS905P1_Bus-de-com/Lib/low_level/GPIO/gpio.c:14:6:GPIO_SetPin	16	static
